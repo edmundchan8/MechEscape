@@ -20,6 +20,10 @@ public class Player : MonoBehaviour {
 
     public Vector2 PlayerMoveDirection;
 
+    //Access to stage clear
+    GameObject stageClearGO;
+    StageClear myStageClear;
+
     void Start()
     {
 
@@ -27,14 +31,22 @@ public class Player : MonoBehaviour {
 
         MyRigidbody2D = GetComponent<Rigidbody2D>();
         GravityStore = MyRigidbody2D.gravityScale;
-        SpeedStore = Speed;
 
         playerCollider = GetComponent<Collider2D>();
+
+        stageClearGO = GameObject.Find("StageClear");
+        myStageClear = stageClearGO.GetComponent<StageClear>();
     }
 	
 	void Update () {
-        
+        //value of ClimbingSpeed can control how fast we climb up ladder
+        //if you want to use it.
+        //it is being accessed from the Climbing script
+
+        Debug.Log("speed = " + Speed);
+
         if (CanWalk) {
+        SpeedStore = Speed;
             transform.Translate(PlayerMoveDirection * Speed * Time.deltaTime);
         }
         
@@ -44,5 +56,8 @@ public class Player : MonoBehaviour {
         if (!IsFacingRight) { transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z); }
 
         Grounded = Physics2D.IsTouchingLayers(playerCollider, groundLayer);
+
+        //Player moves depending of if they haven't cleared stage
+         if (myStageClear.ShowText) { Speed = 0; }
     }
 }
