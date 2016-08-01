@@ -43,8 +43,6 @@ public class Player : MonoBehaviour {
         //if you want to use it.
         //it is being accessed from the Climbing script
 
-        Debug.Log("speed = " + Speed);
-
         if (CanWalk) {
         SpeedStore = Speed;
             transform.Translate(PlayerMoveDirection * Speed * Time.deltaTime);

@@ -38,7 +38,7 @@ public class Climbing : MonoBehaviour {
 
     }
 
-    void OnTriggerEnter2D(Collider2D myCol)
+    void OnTriggerStay2D(Collider2D myCol)
     {
 
         if (Time.time > canClimb)
@@ -47,7 +47,6 @@ public class Climbing : MonoBehaviour {
             if (myCol.name == "LadderBody")
             {
                 ClimbingLadder();
-
             }
         }
     }
@@ -55,6 +54,7 @@ public class Climbing : MonoBehaviour {
     //this is where, when player leaves the ladder, climbing is false and they start walking again
     void OnTriggerExit2D(Collider2D myCol)
     {
+        //this causes issues
         if (myCol.name == "LadderBody")
         {
             myAnimator.SetBool("IsClimbing", false);
@@ -63,12 +63,12 @@ public class Climbing : MonoBehaviour {
             myPlayer.Speed = myPlayer.SpeedStore;
             if (myPlayer.IsFacingRight) { myPlayer.PlayerMoveDirection = Vector2.right; }
             else { myPlayer.PlayerMoveDirection = Vector2.left; }
-            SetCanClimbTime();
         }
     }
 
     void ClimbingLadder()
     {
+
         myAnimator.SetBool("IsClimbing", true);
         myIgnoreCollider.IgnoreGroundCollider(true); //so we can travel through the floor
         myPlayer.MyRigidbody2D.gravityScale = 0f;
@@ -77,6 +77,7 @@ public class Climbing : MonoBehaviour {
         //You could use the code below to set the speed of climbing
         //but you will need to set the climbing speed from the player script
         //myPlayer.Speed = myPlayer.ClimbingSpeed;
+        
     }
 
     void SetCanClimbTime() {

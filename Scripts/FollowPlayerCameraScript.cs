@@ -9,6 +9,9 @@ public class FollowPlayerCameraScript : MonoBehaviour {
     Vector3 holder;
     public float MinX, MaxX;
 
+    //affect the y position of camera
+    public float YPosAdd;
+
     void Start()
     {
         MyPlayer = GameObject.Find("Player");
@@ -23,6 +26,6 @@ public class FollowPlayerCameraScript : MonoBehaviour {
     void LateUpdate()
     {
         transform.position = MyPlayer.transform.position + offset;
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, MinX, MaxX), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, MinX, MaxX), transform.position.y + YPosAdd, transform.position.z);
     }
 }
